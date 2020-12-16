@@ -1,0 +1,10 @@
+Supervised learning
+
+Regression problem: scalar continous output
+Classification problem: scalar discrete output
+
+support vector machine SVM
+
+Unsupervised learning
+
+Clustering algorithms
