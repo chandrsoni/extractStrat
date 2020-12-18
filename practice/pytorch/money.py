@@ -1,3 +1,9 @@
+# algorithm
+# 1. bring last n time series to generate patterns
+# 2. fron the patterns, activate non-linear predictors based on the time serieses
+# 3. merge the activated predictors to create output predictions
+
+
 import pandas as ps
 
 train = ps.read_csv('data/newmsft.csv')
@@ -25,3 +31,10 @@ print(train)
 # w3 = 8 x 10 b3 = 8 x 1
 # w4 = 5 x 8 b4 = 5 x 1
 # w5 = 3 x 5 b5 = 3 x 1
+
+# 1 - first layers to have a weight and constant input
+# a1 = E((W* a0) + b)
+# 2nd layer to extracting patterns out of the input prices - bernauli of 3rd orddr functions on a1 to generate a2 - neuron count = 100
+# 3rd layer activation out of patterns 
+# 4th layer combination of pattern inputs (for culmination of parameters) and bring back input values as well to predict values outs
+# 5th layer single neuron to output the prediction
