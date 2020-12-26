@@ -50,3 +50,12 @@ functions on a1 to generate a2 - neuron count = 100  considering 2** 6, might ne
 4th layer combination of pattern inputs (for culmination of parameters) and bring back input values as well to predict values outs
 
 5th layer single neuron to output the prediction
+
+# backtracking
+y = output of max value on next minute
+
+- find the closest prediction from patterns
+- this should generate index matriz of size patterns X inputsize for prediction
+- this should also generate the error matrix which is the scalar multiplication of the above matrix with the corresponding pattern
+- ise error from 2 to backtrack on the identifier
+- use error from 3 to backtrack and train on the predictions
