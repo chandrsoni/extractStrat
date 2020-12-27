@@ -22,19 +22,21 @@ import bernauli
 # x[:, 1] = day of quarter
 # x[:, 2] = time of quarter
 # creating sample input for pattern recog
-size = 1500
+size = 8770
 lowvalue = 210
 highvalue = 220
 nparam = 32
 x = np.random.uniform(lowvalue, highvalue, (size, nparam)) 
 x[:, 0] = np.ones(size)
-x[:, 1] = np.ones(size)
-x[:, 2] = np.arange(size)
+x[:, 1] = np.ones(size) # leave for day of quarter
+x[:, 2] = np.arange(size) # leave for time of the quarter
 x = x.T                                                         # x = 31 X 1500
 inputcsv = ps.read_csv('MSFT.csv')
-for i in range(8, len(inputcsv)):
-    print(i)
-
+a = np.zeros(4, size)
+a[0] = inputcsv['High']
+a[1] = inputcsv['Low']
+a[2] = inputcsv['close']
+a[3] = inputcsv['Open']
 y = np.random.uniform(lowvalue, highvalue, (size))           # y = 1 x 1500
 
 n2Count = 250
@@ -81,17 +83,7 @@ def forward(x, y, w1, b1, w2, b2, w3, b3, size, alpha):
     db1 = (1./size)*(da2)
     w1 = w1 - alpha * dw1
     b1 = b1 - alpha * db1
-
-
-    patternImpact = patterns * a2
-    o = 
-    o = np.sum(patternImpact, 0)                                # 1 X 1500
-
-    dpatterns = (o-y) / np.sum(a2, 0)
-    # uncertain part, need to have backtracing in 
-
-    da2 = (w.T) * (o-y)
-    return o, dw3, db3, dw2, db2, dw1, db1
+    return dw3, db3, dw2, db2, dw1, db1
 
 def backward(x, o, y, w):
     return dw, db, da
