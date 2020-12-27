@@ -32,10 +32,10 @@ x[:, 1] = np.ones(size) # leave for day of quarter
 x[:, 2] = np.arange(size) # leave for time of the quarter
 x = x.T                                                         # x = 31 X 1500
 inputcsv = ps.read_csv('MSFT.csv')
-a = np.zeros(4, size)
+a = np.zeros((4, size))
 a[0] = inputcsv['High']
 a[1] = inputcsv['Low']
-a[2] = inputcsv['close']
+a[2] = inputcsv['Close']
 a[3] = inputcsv['Open']
 y = np.random.uniform(lowvalue, highvalue, (size))           # y = 1 x 1500
 
