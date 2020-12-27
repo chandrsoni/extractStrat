@@ -25,16 +25,20 @@ import bernauli
 size = 1500
 lowvalue = 210
 highvalue = 220
-nparam = 31
+nparam = 32
 x = np.random.uniform(lowvalue, highvalue, (size, nparam)) 
 x[:, 0] = np.ones(size)
 x[:, 1] = np.ones(size)
 x[:, 2] = np.arange(size)
 x = x.T                                                         # x = 31 X 1500
+inputcsv = ps.read_csv('MSFT.csv')
+for i in range(8, len(inputcsv)):
+    print(i)
+
 y = np.random.uniform(lowvalue, highvalue, (size))           # y = 1 x 1500
 
 n2Count = 250
-w3 = np.random.randn(n2Count, nparam)                           # w3 = 250 X 31
+w3 = np.random.ranfdn(n2Count, nparam)                           # w3 = 250 X 31
 b3 = np.random.uniform(-1, 1 ,(n2Count, 1))                     # b3 = 250 X 1
 n1Count = 64
 w1 = np.random.randn(n1Count, nparam) * 0.01                    # w1 = 64 X 31
