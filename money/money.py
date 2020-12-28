@@ -37,10 +37,16 @@ a[0] = inputcsv['High']
 a[1] = inputcsv['Low']
 a[2] = inputcsv['Close']
 a[3] = inputcsv['Open']
+x[3:7] = a
+
+for index in range(1, 7):
+    a = np.concatenate((np.zeros((4,1)), a), 1)
+    a = a[:, 0: size]
+    x[3 + 4 * index: 7 + 4 * index] = a
 y = np.random.uniform(lowvalue, highvalue, (size))           # y = 1 x 1500
 
 n2Count = 250
-w3 = np.random.ranfdn(n2Count, nparam)                           # w3 = 250 X 31
+w3 = np.random.randn(n2Count, nparam)                           # w3 = 250 X 31
 b3 = np.random.uniform(-1, 1 ,(n2Count, 1))                     # b3 = 250 X 1
 n1Count = 64
 w1 = np.random.randn(n1Count, nparam) * 0.01                    # w1 = 64 X 31
@@ -60,36 +66,30 @@ def forward(x, y, w1, b1, w2, b2, w3, b3, size, alpha):
     a2 = bernauli.sigmoid(lineara1)
     # a2 is now activators for patterns
     patterns = linear.combination(w3, x, b3)                    # patterns = 250 X 1500
-    print(patterns)
-    print(patterns.shape)
-    print(y)
-    print(y.shape)
-    print(patterns - y)
     error = patterns - y
     errorabs = np.abs(patterns - y)
     classifier = errorabs == np.min(errorabs, 0)
     patternout = classifier * y
     clearout = classifier * error
-    dw3 = (1./size)*((error) * (x.T))
+    dw3 = (1./size)*(np.dot((error), (x.T)))
     db3 = (1./size)*(error)
     w3 = w3 - alpha * dw3
     b3 = b3 - alpha * db3
-    dw2 = (1./size)*((classifier - a2) * (sqinput.T))
+    dw2 = (1./size)*(np.dot((classifier - a2), (sqinput.T)))
     db2 = (1./size)*((classifier - a2))
     w2 = w2 - alpha * dw2
     b2 = b2 - alpha * db2
-    da2 = (1./size)*(w2.T * (classifier - a2))
-    dw1 = (1./size)*(da2 * (x.T))
+    da2 = (1./size)*(np.dot(w2.T, (classifier - a2)))
+    dw1 = (1./size)*(np.dot(da2, (x.T)))
     db1 = (1./size)*(da2)
-    w1 = w1 - alpha * dw1
-    b1 = b1 - alpha * db1
+    w1 = w1 - alpha * dw1[0:n1Count]
+    b1 = b1 - alpha * db1[0:n1Count]
     return dw3, db3, dw2, db2, dw1, db1
 
-def backward(x, o, y, w):
-    return dw, db, da
 
 
 # let's make w1 and b1 now to get to second layer
 # going with 64 neurons in layer 2
-
-print(forward(x, y, w1, b1, w2, b2, w3, b3, size, 0.1))
+for iteration in range(0, 1500):
+    forward(x, y, w1, b1, w2, b2, w3, b3, size, 0.1)
+# print(forward(x, y, w1, b1, w2, b2, w3, b3, size, 0.1))
