@@ -43,16 +43,22 @@ for index in range(1, 7):
     a = np.concatenate((np.zeros((4,1)), a), 1)
     a = a[:, 0: size]
     x[3 + 4 * index: 7 + 4 * index] = a
-y = np.random.uniform(lowvalue, highvalue, (size))           # y = 1 x 1500
+a = np.concatenate((np.zeros((4,1)), a), 1)
+a = a[:, 0: size]
+x[31] = a[3]
+y = a[0]           # y = 1 x 1500
+x= x[:, 7:]
+y = y[7:]
+size = size - 7
 
 n2Count = 250
-w3 = np.random.randn(n2Count, nparam)                           # w3 = 250 X 31
+w3 = np.random.uniform(0.9, 1.1 ,(n2Count, nparam))                           # w3 = 250 X 31
 b3 = np.random.uniform(-1, 1 ,(n2Count, 1))                     # b3 = 250 X 1
 n1Count = 64
-w1 = np.random.randn(n1Count, nparam) * 0.01                    # w1 = 64 X 31
+w1 = np.random.uniform(0.9, 1.1 ,(n1Count, nparam))                    # w1 = 64 X 31
 b1 = np.random.uniform(-1, 1, (n1Count, 1))                     # b1 = 61 X 1
 
-w2 = np.random.randn(n2Count, n1Count * 2 + 1) * 0.01           # w2 = 250 X 129
+w2 = np.random.uniform(0.9, 1.1 ,(n2Count, n1Count * 2 + 1))           # w2 = 250 X 129
 b2 = np.random.uniform(-1, 1 ,(n2Count, 1))                     # b2 = 250 X 1
 
 
@@ -90,6 +96,19 @@ def forward(x, y, w1, b1, w2, b2, w3, b3, size, alpha):
 
 # let's make w1 and b1 now to get to second layer
 # going with 64 neurons in layer 2
-for iteration in range(0, 1500):
-    forward(x, y, w1, b1, w2, b2, w3, b3, size, 0.1)
+for iteration in range(0, 200):
+    forward(x, y, w1, b1, w2, b2, w3, b3, size, 1)
+
+datafile = ps.DataFrame(w1)
+datafile.to_csv('w1.csv')
+datafile = ps.DataFrame(b1)
+datafile.to_csv('b1.csv')
+datafile = ps.DataFrame(w2)
+datafile.to_csv('w2.csv')
+datafile = ps.DataFrame(b2)
+datafile.to_csv('b2.csv')
+datafile = ps.DataFrame(w3)
+datafile.to_csv('w3.csv')
+datafile = ps.DataFrame(b3)
+datafile.to_csv('b3.csv')
 # print(forward(x, y, w1, b1, w2, b2, w3, b3, size, 0.1))
