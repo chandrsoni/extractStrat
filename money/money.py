@@ -96,7 +96,7 @@ def forward(x, y, w1, b1, w2, b2, w3, b3, size, alpha):
 
 # let's make w1 and b1 now to get to second layer
 # going with 64 neurons in layer 2
-for iteration in range(0, 200):
+for iteration in range(0, 10000):
     forward(x, y, w1, b1, w2, b2, w3, b3, size, 1)
 
 datafile = ps.DataFrame(w1)
